@@ -1,0 +1,36 @@
+{
+  "name": "cypress-learning",
+  "version": "0.0.1",
+  "description": "",
+  "main": "serverless.js",
+  "dependencies": {
+    "chai": "^4.3.4"
+  },
+  "devDependencies": {
+    "cypress": "^10.1.0",
+    "cypress-mochawesome-reporter": "^2.3.0",
+    "cypress-multi-reporters": "^1.5.0",
+    "cypress-xpath": "^1.6.2",
+    "del": "^6.0.0",
+    "mocha": "^9.1.1",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^5.2.0"
+  },
+  "scripts": {
+    "cypress:open": "cypress open",
+    "test:ci:chrome": "npm run pretest && cypress run --spec 'cypress/e2e/**/*.js'  || npm run posttest ",
+    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
+    "pretest": "npm run clean:reports",
+    "scripts": "cypress run ",
+    "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+    "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
+    "posttest": "npm run combine-reports && npm run generate-report",
+    "test": "npm run scripts || npm run posttest"
+  },
+  "author": "Eren Yilmaz",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}
